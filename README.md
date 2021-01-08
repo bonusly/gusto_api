@@ -23,7 +23,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Configuration
+
+In an initializer, say, `config/initializers/gusto_api.rb`, configure the gem
+with settings provided by Gusto:
+
+```ruby
+GustoApi.configure do |config|
+  config.api_token = 'token'
+  config.client_id = 'client id'
+  config.client_secret = 'client secret'
+  config.redirect_url = 'redirect url'
+end
+```
 
 ## Development
 
