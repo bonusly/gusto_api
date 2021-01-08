@@ -37,6 +37,33 @@ GustoApi.configure do |config|
 end
 ```
 
+### Creating a Company
+
+Example with the minimum set of attributes:
+
+```ruby
+GustoApi::Company.create(
+  user: {
+    first_name: 'George',
+    last_name: 'Hampton,'
+    email: 'george@example.com'
+  },
+  company: {
+    name: 'Hampton LLC'
+  }
+)
+```
+
+Returns:
+
+```
+{
+  "account_claim_url": "https://app.gusto.com/claim_account/3456789"
+}
+```
+
+Documentation for full list of attributes and possible errors: https://docs.gusto.com/v1/examples/creating-a-company
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

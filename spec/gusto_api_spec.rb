@@ -10,12 +10,14 @@ RSpec.describe GustoApi do
         config.client_id = 'client id'
         config.client_secret = 'client secret'
         config.redirect_url = 'redirect url'
+        config.testing = false
       end
 
       expect(GustoApi.configuration.api_token).to eq 'token'
       expect(GustoApi.configuration.client_id).to eq 'client id'
       expect(GustoApi.configuration.client_secret).to eq 'client secret'
       expect(GustoApi.configuration.redirect_url).to eq 'redirect url'
+      expect(GustoApi.configuration.testing).to be false
     end
   end
 end
