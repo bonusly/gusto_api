@@ -20,6 +20,18 @@ module GustoApi
     attr_accessor :endpoint, :method, :params, :auth_token
 
     def options
+      {
+        headers: headers
+      }.merge(param_options)
+    end
+
+    def headers
+      {
+        "Authorization" => "Token #{auth_token}"
+      }
+    end
+
+    def param_options
       return {} unless params.any?
 
       {
