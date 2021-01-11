@@ -39,6 +39,8 @@ end
 
 ### Creating a Company
 
+This requires configuring the API token above with the token provided by Gusto.
+
 Example with the minimum set of attributes:
 
 ```ruby
@@ -63,6 +65,30 @@ Returns:
 ```
 
 Documentation for full list of attributes and possible errors: https://docs.gusto.com/v1/examples/creating-a-company
+
+### Getting a Company's Employees
+
+This and most other endpoints require getting an `access_token` via OAuth.
+
+```ruby
+GustoApi::Company.new(id, access_token).employees
+```
+
+Documentation for response: https://docs.gusto.com/v1/employees
+
+### Want to interact with a different API endpoint?
+
+GustoApi provides a generic `GustoApi::Request` class with the following initialize signature:
+
+```ruby
+def initialize(endpoint:, method:, params: {}, auth_token: GustoApi.configuration.api_token)
+```
+
+`method` must be `:get` or `:post`, and the endpoint is everything after "v1/" in the API endpoint URI.
+
+`params` is a hash that will be sent as query params for a GET request or the response's body for a POST.
+
+Calling `submit` on the instance will use HTTParty to send the request and return the response.
 
 ## Development
 

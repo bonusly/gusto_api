@@ -9,5 +9,23 @@ module GustoApi
         params: { user: user, company: company }
       ).submit
     end
+
+    def initialize(id, access_token)
+      self.id = id
+      self.access_token = access_token
+    end
+
+    def employees(include_terminated: false)
+      params = include_terminated ? {} : { terminated: false }
+      Request.new(
+        endpoint: "companies/#{id}/employees",
+        method: :get,
+        params: params
+      )
+    end
+
+    private
+
+    attr_accessor :id, :access_token
   end
 end
