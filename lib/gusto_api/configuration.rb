@@ -7,7 +7,7 @@ module GustoApi
     end
 
     def base_uri
-      testing ? 'https://api.gusto-demo.com/v1' : 'https://api.gusto.com/v1'
+      testing ? 'https://api.gusto-demo.com/v1/' : 'https://api.gusto.com/v1/'
     end
   end
 end

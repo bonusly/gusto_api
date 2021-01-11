@@ -37,7 +37,7 @@ RSpec.describe GustoApi::Request do
       let(:method) { :get }
 
       it 'does reasonable httparty stuff' do
-        expect(HTTParty).to receive(:get).with('https://api.gusto-demo.com/test', query: { bananas: true })
+        expect(HTTParty).to receive(:get).with('https://api.gusto-demo.com/v1/test', query: { bananas: true })
         subject.submit
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe GustoApi::Request do
       let(:method) { :post }
 
       it 'does reasonable httparty stuff' do
-        expect(HTTParty).to receive(:post).with('https://api.gusto-demo.com/test', body: { bananas: true })
+        expect(HTTParty).to receive(:post).with('https://api.gusto-demo.com/v1/test', body: { bananas: true })
         subject.submit
       end
     end
