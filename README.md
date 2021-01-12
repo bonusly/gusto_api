@@ -54,6 +54,17 @@ Link people to that URL and they'll see an authorization page on Gusto's site. A
 ```ruby
 GustoApi::Oauth.get_token(code)
 ```
+This returns a hash:
+```ruby
+{
+  "access_token" => "ju53kDqMS0iPVsOECQF-H0ifxHDFBDTi2BHOopMrW1X",
+  "token_type" => "Bearer",
+  "expires_in" => 7200,
+  "refresh_token" => "64ir0v_ioQMdWin6Dv9poXGW-SI04yQr2oXE67YqgP5",
+  "scope" => "public",
+  "created_at" => 1610493513
+}
+```
 
 The temporary code lasts for 10 minutes and the access token lasts for 2 hours.
 
@@ -63,7 +74,7 @@ After the access token expires, you'll need to use the `refresh_token` to get a 
 GustoApi::Oauth.refresh_token(refresh_token)
 ```
 
-This will give a new `access_token` and `refresh_token`. Each `refresh_token` can only be used once.
+The hash returned is identical to that returned by `get_token`. It will give a new `access_token` and `refresh_token`. Each `refresh_token` can only be used once.
 
 ### Creating a Company
 
