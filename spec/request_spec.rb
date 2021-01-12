@@ -37,7 +37,7 @@ RSpec.describe GustoApi::Request do
 
   describe '#submit' do
     let(:params) { { bananas: true } }
-    let(:subject) { described_class.new(endpoint: 'test', method: method, params: params)}
+    let(:subject) { described_class.new(endpoint: 'v1/test', method: method, params: params)}
 
     context 'when GET' do
       let(:method) { :get }

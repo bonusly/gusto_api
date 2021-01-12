@@ -9,12 +9,12 @@ RSpec.describe GustoApi::Configuration do
   describe '#base_uri' do
     it 'returns demo uri when testing' do
       subject.testing = true
-      expect(subject.base_uri).to eq 'https://api.gusto-demo.com/v1/'
+      expect(subject.base_uri).to eq 'https://api.gusto-demo.com/'
     end
 
     it 'returns production uri when testing' do
       subject.testing = false
-      expect(subject.base_uri).to eq 'https://api.gusto.com/v1/'
+      expect(subject.base_uri).to eq 'https://api.gusto.com/'
     end
   end
 end

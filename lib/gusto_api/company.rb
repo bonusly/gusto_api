@@ -4,7 +4,7 @@ module GustoApi
       raise Error.new("Missing a required attribute") unless user[:first_name] && user[:last_name] && user[:email] && company[:name]
 
       Request.new(
-        endpoint: 'provision',
+        endpoint: 'v1/provision',
         method: :post,
         params: { user: user, company: company }
       ).submit
@@ -18,7 +18,7 @@ module GustoApi
     def employees(include_terminated: false)
       params = include_terminated ? {} : { terminated: false }
       Request.new(
-        endpoint: "companies/#{id}/employees",
+        endpoint: "v1/companies/#{id}/employees",
         method: :get,
         params: params
       )
