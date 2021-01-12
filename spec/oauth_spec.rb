@@ -11,7 +11,7 @@ RSpec.describe GustoApi::Oauth do
 
   describe '.auth_url' do
     it 'returns the URL for kicking off oauth with gusto' do
-      expect(described_class.auth_url).to eq 'https://api.gusto.com/oauth/authorize?client_id=clientid&redirect_uri=http://www.example.com/callback&response_type=code'
+      expect(described_class.auth_url).to eq 'https://api.gusto.com/oauth/authorize?client_id=clientid&redirect_uri=http%3A%2F%2Fwww.example.com%2Fcallback&response_type=code'
     end
   end
 end
