@@ -37,6 +37,34 @@ GustoApi.configure do |config|
 end
 ```
 
+### OAuth flow
+
+Details are documented here: https://docs.gusto.com/v1/basics/authentication
+
+You'll have to set up a controller for the OAuth authorization callback. Set `redirect_url` to its URL.
+
+To get the initial URL to trigger the OAuth flow, use
+
+```ruby
+GustoApi::Oauth.auth_url
+```
+
+Link people to that URL and they'll see an authorization page on Gusto's site. After they accept, they'll be redirected to your `redirect_url` with `params[:code]` set to a temporary code that can be exchanged for an `access_token` and `refresh_token` with:
+
+```ruby
+GustoApi::Oauth.get_token(code)
+```
+
+The temporary code lasts for 10 minutes and the access token lasts for 2 hours.
+
+After the access token expires, you'll need to use the `refresh_token` to get a new one:
+
+```ruby
+GustoApi::Oauth.refresh_token(refresh_token)
+```
+
+This will give a new `access_token` and `refresh_token`. Each `refresh_token` can only be used once.
+
 ### Creating a Company
 
 This requires configuring the API token above with the token provided by Gusto.

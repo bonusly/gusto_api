@@ -16,12 +16,6 @@ RSpec.describe GustoApi::Request do
       }.to raise_error(GustoApi::Error, "Invalid method: teapot. Must be :get or :post")
     end
 
-    it 'yells if missing the auth_token' do
-      expect {
-        described_class.new(endpoint: 'asdf', method: :get, auth_token: nil)
-      }.to raise_error(GustoApi::Error, /Missing auth_token/)
-    end
-
     it 'accepts :get' do
       expect {
         described_class.new(endpoint: 'asdf', method: :get)

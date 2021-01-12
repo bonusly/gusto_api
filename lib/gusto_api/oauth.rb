@@ -9,5 +9,35 @@ module GustoApi
         )
       end.to_s
     end
+
+    def self.get_token(code)
+      Request.new(
+        endpoint: 'oauth/token',
+        method: :post,
+        params: {
+          client_id: GustoApi.configuration.client_id,
+          client_secret: GustoApi.configuration.client_secret,
+          redirect_uri: GustoApi.configuration.redirect_url,
+          code: code,
+          grant_type: 'authorization_code'
+        },
+        auth_token: nil
+      ).submit
+    end
+
+    def self.refresh_token(refresh_token)
+      Request.new(
+        endpoint: 'oauth/token',
+        method: :post,
+        params: {
+          client_id: GustoApi.configuration.client_id,
+          client_secret: GustoApi.configuration.client_secret,
+          redirect_uri: GustoApi.configuration.redirect_url,
+          refresh_token: refresh_token,
+          grant_type: 'refresh_token'
+        },
+        auth_token: nil
+      ).submit
+    end
   end
 end
