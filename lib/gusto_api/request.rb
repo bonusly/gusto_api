@@ -4,6 +4,7 @@ module GustoApi
   class Request
     def initialize(endpoint:, method:, params: {}, auth_token: GustoApi.configuration.api_token)
       raise Error.new("Invalid method: #{method}. Must be :get or :post") unless %i[get post].include?(method)
+      raise Error.new("Missing auth_token. Please either pass in an `auth_token` argument or set `GustoApi.configuration.api_token`") if auth_token.nil?
 
       self.endpoint = endpoint
       self.method = method

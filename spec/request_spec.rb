@@ -16,6 +16,12 @@ RSpec.describe GustoApi::Request do
       }.to raise_error(GustoApi::Error, "Invalid method: teapot. Must be :get or :post")
     end
 
+    it 'yells if missing the auth_token' do
+      expect {
+        described_class.new(endpoint: 'asdf', method: :get, auth_token: nil)
+      }.to raise_error(GustoApi::Error, /Missing auth_token/)
+    end
+
     it 'accepts :get' do
       expect {
         described_class.new(endpoint: 'asdf', method: :get)
@@ -37,7 +43,12 @@ RSpec.describe GustoApi::Request do
       let(:method) { :get }
 
       it 'does reasonable httparty stuff' do
-        expect(HTTParty).to receive(:get).with('https://api.gusto-demo.com/v1/test', query: { bananas: true })
+        expect(HTTParty).to receive(:get).with(
+          'https://api.gusto-demo.com/v1/test', {
+            headers: { "Authorization" => "Token token" },
+            query: { bananas: true }
+          }
+        )
         subject.submit
       end
     end
@@ -46,7 +57,12 @@ RSpec.describe GustoApi::Request do
       let(:method) { :post }
 
       it 'does reasonable httparty stuff' do
-        expect(HTTParty).to receive(:post).with('https://api.gusto-demo.com/v1/test', body: { bananas: true })
+        expect(HTTParty).to receive(:post).with(
+          'https://api.gusto-demo.com/v1/test', {
+            body: { bananas: true },
+            headers: { "Authorization" => "Token token" }
+          }
+        )
         subject.submit
       end
     end
