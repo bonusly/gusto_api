@@ -2,13 +2,14 @@ require 'httparty'
 
 module GustoApi
   class Request
-    def initialize(endpoint:, method:, params: {}, auth_token: GustoApi.configuration.api_token)
+    def initialize(endpoint:, method:, params: {}, auth_token:, auth_type: 'Token')
       raise Error.new("Invalid method: #{method}. Must be :get or :post") unless %i[get post].include?(method)
 
       self.endpoint = endpoint
       self.method = method
       self.params = params
       self.auth_token = auth_token
+      self.auth_type = auth_type
     end
 
     def submit
@@ -17,7 +18,7 @@ module GustoApi
 
     private
 
-    attr_accessor :endpoint, :method, :params, :auth_token
+    attr_accessor :endpoint, :method, :params, :auth_token, :auth_type
 
     def options
       {
@@ -29,7 +30,7 @@ module GustoApi
       return {} if auth_token.nil?
 
       {
-        "Authorization" => "Token #{auth_token}"
+        "Authorization" => "#{auth_type} #{auth_token}"
       }
     end
 

@@ -11,8 +11,7 @@ module GustoApi
     end
 
     def self.get_token(code)
-      Request.new(
-        endpoint: 'oauth/token',
+      OauthRequest.new(
         method: :post,
         params: {
           client_id: GustoApi.configuration.client_id,
@@ -20,14 +19,12 @@ module GustoApi
           redirect_uri: GustoApi.configuration.redirect_url,
           code: code,
           grant_type: 'authorization_code'
-        },
-        auth_token: nil
+        }
       ).submit
     end
 
     def self.refresh_token(refresh_token)
-      Request.new(
-        endpoint: 'oauth/token',
+      OauthRequest.new(
         method: :post,
         params: {
           client_id: GustoApi.configuration.client_id,
@@ -35,8 +32,7 @@ module GustoApi
           redirect_uri: GustoApi.configuration.redirect_url,
           refresh_token: refresh_token,
           grant_type: 'refresh_token'
-        },
-        auth_token: nil
+        }
       ).submit
     end
   end

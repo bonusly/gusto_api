@@ -3,7 +3,7 @@ module GustoApi
     def self.create(user:, company:)
       raise Error.new("Missing a required attribute") unless user[:first_name] && user[:last_name] && user[:email] && company[:name]
 
-      Request.new(
+      TokenRequest.new(
         endpoint: 'v1/provision',
         method: :post,
         params: { user: user, company: company }
@@ -17,11 +17,12 @@ module GustoApi
 
     def employees(include_terminated: false)
       params = include_terminated ? {} : { terminated: false }
-      Request.new(
+      BearerRequest.new(
         endpoint: "v1/companies/#{id}/employees",
         method: :get,
-        params: params
-      )
+        params: params,
+        auth_token: access_token
+      ).submit
     end
 
     private

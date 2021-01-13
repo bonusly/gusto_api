@@ -105,6 +105,47 @@ Returns:
 
 Documentation for full list of attributes and possible errors: https://docs.gusto.com/v1/examples/creating-a-company
 
+### Getting the Current User
+
+To get the authenticated user:
+
+```ruby
+GustoApi::CurrentUser.fetch(access_token)
+```
+
+This will return a hash:
+
+```ruby
+{
+  "id" => 7757869449967110,
+  "email" => "bonusly+demo@gusto.com",
+  "roles" => {
+    "payroll_admin" => {
+      "companies" => [
+        {
+          "id" => 7756341740967741,
+          "name" => "Bonusly Demo",
+          "trade_name" => "",
+          "locations" => [
+            {
+              "id" => 7757727716494058,
+              "street_1" => "912 Silver St.",
+              "street_2" => "Suite 1966",
+              "city" => "San Francisco",
+              "state" => "CA",
+              "zip" => "94107",
+              "country" => "USA",
+              "active" => true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+```
+
 ### Getting a Company's Employees
 
 This and most other endpoints require getting an `access_token` via OAuth.
@@ -117,17 +158,28 @@ Documentation for response: https://docs.gusto.com/v1/employees
 
 ### Want to interact with a different API endpoint?
 
-GustoApi provides a generic `GustoApi::Request` class with the following initialize signature:
+GustoApi provides two generic `Request` classes for interacting with the API.
+
+For API endpoints where you use the API key provided by Gusto, there's `GustoApi::TokenRequest` class with the following initialize signature:
 
 ```ruby
-def initialize(endpoint:, method:, params: {}, auth_token: GustoApi.configuration.api_token)
+def initialize(endpoint:, method:, params: {})
 ```
 
-`method` must be `:get` or `:post`, and the endpoint is everything after "v1/" in the API endpoint URI.
+`method` must be `:get` or `:post`, and `endpoint` is the URI for the API endpoint starting with "v1/".
 
 `params` is a hash that will be sent as query params for a GET request or the response's body for a POST.
 
-Calling `submit` on the instance will use HTTParty to send the request and return the response.
+For API endpoints where you use the `access_token` fetched via OAuth, there's `GustoApi::BearerRequest` with the following initialize signature:
+
+```ruby
+def initialize(endpoint:, method:, params: {}, auth_token:)
+```
+
+The arguments are the same except that it requires passing in the `access_token` as the `auth_token` argument.
+
+Calling `submit` on the request instance will use HTTParty to send the request and return the response.
+
 
 ## Development
 

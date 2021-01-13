@@ -12,26 +12,26 @@ RSpec.describe GustoApi::Request do
   describe '#initialize' do
     it 'yells if passed an invalid method' do
       expect {
-        described_class.new(endpoint: 'asdf', method: :teapot)
+        described_class.new(endpoint: 'asdf', method: :teapot, auth_token: GustoApi.configuration.api_token)
       }.to raise_error(GustoApi::Error, "Invalid method: teapot. Must be :get or :post")
     end
 
     it 'accepts :get' do
       expect {
-        described_class.new(endpoint: 'asdf', method: :get)
+        described_class.new(endpoint: 'asdf', method: :get, auth_token: GustoApi.configuration.api_token)
       }.to_not raise_error
     end
 
     it 'accepts :post' do
       expect {
-        described_class.new(endpoint: 'asdf', method: :post)
+        described_class.new(endpoint: 'asdf', method: :post, auth_token: GustoApi.configuration.api_token)
       }.to_not raise_error
     end
   end
 
   describe '#submit' do
     let(:params) { { bananas: true } }
-    let(:subject) { described_class.new(endpoint: 'v1/test', method: method, params: params)}
+    let(:subject) { described_class.new(endpoint: 'v1/test', method: method, params: params, auth_token: GustoApi.configuration.api_token) }
 
     context 'when GET' do
       let(:method) { :get }
